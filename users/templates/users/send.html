@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	{% if len is 0 %}
+		<h1 style="text-align:center;font-size:25px;color:yellow;">No Send Collabs</h1>
+	{% else %}
+	<h1 style="text-align:center;font-size:25px;color:yellow;">Send Collabs</h1>
+		{% for i in q %}
+		<div style="border-bottom:1px solid #5800c3;padding:7px;">
+		<img src="{{i.other.profile.image.url}}" width="50" height="50"><span style="color:#5800c3;font-size:20px;">{{i.other.username}}</span>
+		<span style="float:right;color:pink;">{{i.date_posted}}</span>
+		<p style="font-size: 18px;color:yellow;">
+			{{i.question}}
+		</p>
+			
+			<a href="/removecollab/{{i.id}}" class="btn btn-outline-warning">remove</a>	
+
+			</div>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

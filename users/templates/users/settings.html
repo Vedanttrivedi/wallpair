@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% load static %}
+{% block content %}
+    <center><a href="/logout/" style="color:yellow;font-size:20px;text-decoration:none;text-align:center;">Logout</a>
+		</center><br>
+		    <a class="btn btn-outline-warning" style="width:100%;" href="/profilep/">Edit Profile</a><br>
+            <a class="btn btn-outline-warning" style="width:100%;" href="/account/">Manage Account</a><br>
+            <a href="/showsave/"class="btn btn-outline-warning" style="width:100%;">Saved<span class="ml-3">{{request.user.profile.mysave.all.count}}</span></a><br>
+            <a class="btn btn-outline-warning" style="width:100%;" href="/send/">Send Collabs<span class="ml-3">{{request.user.share.pend.all.count}}</span></a><br>
+            <a class="btn btn-outline-warning" style="width:100%;" href="/recieved/">Recieved Collabs <span class="ml-3">{{request.user.share.done.all.count}}</span></a><br>
+              <a class="btn btn-outline-warning" style="width:100%;" href="/team/">About Us & Terms And Conditions</span></a><br>
+            <center>
+            
+    </center>
+		
+{% endblock %}

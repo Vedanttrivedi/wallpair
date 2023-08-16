@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Create Post</title>
+	<meta name="description" content="create post wallpair">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+
+body
+{
+    font-size:25px;
+    
+}
+.mystyle {
+    border: 1px solid green;
+    border-radius: 10%;
+    display: inline-block;
+    width:38%;
+    text-align: center;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size:20px;
+    margin-top: 10px;
+}
+.
+.text
+{
+	width: 100%;
+	border:1px solid red;
+	padding: 10px 15px;
+	display: block;
+}
+.text:focus
+{
+	outline: 0;
+}
+x:hover
+{
+    background-color:green;
+    transition:0.5s ease-out;
+}
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="{% static 'blog/njq.js' %}"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-181052445-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-181052445-1');
+</script>
+</head>
+<body style="background-color:black;">
+	<audio id="sound2" src="/static/blog/reload.mp3"></audio>
+<center><a href="/" style="text-decoration:none;"><span style="font-size:35px;color:white;"><img src="{% static 'blog/mylogo.png' %}" width="110" height="70">wall<span style="color:yellow;">pair</span></span></a></center>
+	    <p style="visibility:hidden;color:white;font-size:10px;" id="load">Loading...</p>
+	    <span style="color:yellow;font-size:16px;">Add Youtube Post<a href="/ycreate/" class="ml-2">here</a><br>
+		<span style="color:orange;font-size:16px;"> Random Reddit Memes??<a href="/memes/" class="ml-2">here</a></span>
+	<div class="container mt-2" >
+		<h2 style="color:deeppink;text-align:center;">Post</h2>
+		
+	<form method="post" enctype="multipart/form-data" onsubmit="return che();">
+<input type="text" name="doe" value="" style="visibility: hidden;width:1%;" id="doe" >
+		{% csrf_token %}
+		<input type="text" name="question" placeholder="caption" required class="text" style="width: 100%;border:1px solid green;padding: 10px 15px;display: block;">
+			<label class="mystyle" onchange="ni(this);" style="color:blue;">
+		<input type="file" name="img1" required style="visibility: hidden;width:1%;" class="x">
+		<span>image1</span>
+		</label></abbr>
+	<label class="mystyle" onchange="ni(this);" style="color:blue;">
+		    <input type="file" name="img2" required style="visibility: hidden;width:1%;" class="x">
+		   <span>image2</span>
+		</label></abbr><br><br>
+
+		<select name="type">
+			<option value="general">
+					<img src="/static/blog/gen.png" alt="img" width="30" height="20" class="ml-2">General
+			</option>
+
+			<option value="sports">
+
+		<img src="/static/blog/spo.png" alt="img" width="30" height="20" class="ml-2">Sports
+
+
+		</option>
+
+		<option value="gaming">
+			<img src="/static/blog/gam.png" alt="img" width="30" height="20" class="ml-2">Games
+
+		</option>
+		<option value="gadgets">
+			<img src="/static/blog/gad.png" alt="img" width="30" height="20" class="ml-2">Gadgets
+
+		</option>
+		<option value="roast">
+			<img src="/static/blog/roa.jpg" alt="img" width="30" height="20" class="ml-2">Roast
+
+		</option>
+		<option value="food">
+
+<img src="/static/blog/fod.png" alt="img" width="30" height="20" class="ml-2">Food
+
+		</option>
+		<option value="location">
+					<img src="/static/blog/loc.png" alt="img" width="30" height="20" class="ml-2">location
+
+		</option>
+		<option value="movies">
+
+		<img src="/static/blog/mov.png" alt="img" width="30" height="20" class="ml-2">Movie
+
+		</option>
+		<option value="cars">
+			<img src="/static/blog/veh.png" alt="img" width="300" height="20" class="ml-2">Vehicle
+		</option>
+		<option value="coding">
+
+<img src="/static/blog/cod.png" alt="img" width="30" height="20" class="ml-2">Code
+		</option>
+		<option value="art">
+
+<img src="/static/blog/art.png" alt="img" width="30" height="20" class="ml-2">Art
+		</option>
+		<option value="memes">
+		<img src="/static/blog/mem.png" alt="img" width="30" height="20" class="ml-2">Memes
+		</option>
+		</select>
+
+        <br><br>
+		<input type="submit" value="Submit" class="btn btn-outline-info p-2 " style="display: block;width:80%;" id="submit" >
+		
+		<input type="checkbox" name="show" onclick="alert('you should not select less than 5 people');">
+		<span>Tag Only<span style="color:#5800c3;">(private post:only visible to the users who are tagged <span style="color:white;">tag anyone</span>)<br>
+		
+		</span></span>
+	</form>
+	<span href="" class="mr-2" style="color:teal;">Tag</span>
+	<div id="tagy">
+
+	</div>
+	<br>
+		<input type="text" name="search" style="border:1px solid blue;padding:5px;width:60%;" id="search1" placeholder="add friends here">
+
+<div id="result" class="container">
+    		<div id="lol">
+
+    		</div>
+  	</div>
+
+</div>
+<p id="demo"></p>
+</body>
+</html>
+	<script type="text/javascript">
+
+		$(function(){
+
+		$("#search1").keyup(function (){
+
+			$.ajax({
+				type: "GET",
+				url:"/userlinks1/",
+				data:{
+					'search':$("#search1").val().trim(),
+				},
+				success: searchdone,
+				dataType:'html'
+
+			});
+
+		});
+
+
+});
+function searchdone(data,textStatus,jqXHR)
+{
+
+	$("#lol").html(data);
+	console.log(data);
+}
+
+		function showbox()
+		{
+			document.querySelector("#search").style.visibility="visible";
+			document.querySelector("#search").style.border="1px solid blue";
+
+			alert(1);
+		}
+        var r = [];
+		function ni(obj)
+		{
+			var t = obj.childNodes;
+
+			var filename1 = t[1].value.split("\\");
+			var filenam2 = t[1].value.split("\\");
+
+			t[3].innerText=filename1[2];
+			var ext = filename1[2];
+			ext = ext.split(".");
+			r.push(ext[1]);
+		}
+		$(document).ready(function() {
+$('.mdb-select').materialSelect();
+});
+
+function che()
+{
+    document.querySelector("#submit").disabled=true;
+    document.querySelector("#load").style.visibility="visible";
+    document.querySelector("#sound2").play();
+    return true;
+}
+	</script>
+
+
+

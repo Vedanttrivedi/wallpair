@@ -1,0 +1,22 @@
+{% extends "blog/base.html "%}
+{% block content %}
+<div class="content">
+	<h2>{{}}</h2>
+	{% for user in user%}
+	<article class="media content-section">
+		<div class="media-body">
+	<div class="meta-data">
+		<img src="{{data.author.profile.image.url}}" width="50" style="border-radius: 50%;" class="mr-2">
+				<a class="mr-2" href="#">{{user.post.title}}</a>
+				<small class="text-muted">{{user.post.content}}</small>
+			</div>
+			<h2>
+				<p class="article-title" href="">{{data.post.date_posted}}</p>
+			</h2>
+			<p class="article-content">{{data.content}}</p>
+		</div>
+	</article>
+	<hr>
+	{% endfor%}
+	</div>
+{% endblock %}

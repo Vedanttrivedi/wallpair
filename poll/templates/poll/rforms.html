@@ -1,0 +1,59 @@
+<style type="text/css">
+
+body
+{
+    font-size:25px;
+}
+.mystyle {
+    border: 1px solid green;
+    border-radius: 10%;
+    display:inline-block;
+    width:25%;
+    text-align: center;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size:14px;
+    margin-top: 10px;
+
+}
+.text
+{
+	width: 100%;
+	border:1px solid red;
+	padding: 10px 15px;
+	display: block;
+}
+.text:focus
+{
+	outline: 0;
+}
+
+</style>
+{% extends 'blog/base.html'%}
+{% load crispy_forms_tags %}
+{% block content %}
+	<audio id="sound2" src="/static/blog/reload.mp3"></audio>
+
+	    <p style="visibility:hidden;color:white;font-size:20px;" id="load">Loading...</p>
+
+	<div class="container mt-5" >
+		<h4 style="color:deeppink;text-align:center;">Generate mEme POst</h4>
+	<form method="post" action="/memes/" onsubmit="return chec();">
+
+		{% csrf_token %}
+		<input type="text" name="question" placeholder="caption "  class="text" style="visibility:hidden;">
+
+		<input type="submit" value="create meme" class="btn btn-outline-info pl-3 pr-3" style="display: block;" id="submit">
+
+		</span></span>
+	</form>
+<script>
+    function chec()
+    {
+        document.querySelector("#submit").disabled=true;
+        document.querySelector("#load").style.visibility="visible";
+        document.querySelector("#sound2").play();
+        return true;
+    }
+</script>
+{% endblock content %}

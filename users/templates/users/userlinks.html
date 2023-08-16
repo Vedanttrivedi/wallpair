@@ -1,0 +1,10 @@
+{% if users %}
+<ul style="list-style-type:none;">
+    {% for user in users %}
+        <div style="padding:5px;border-bottom:2px solid blue;font-size:16px;margin-top:2px;">
+            <a href="/search?user={{user.username}}"><li><img src="{{user.profile.image.url}}" width="35" height="35" alt="img" style="border-radius:30%;">{{user.username}}</li></a>
+        </div>
+
+    {% endfor%}
+    </ul>
+{% endif %}

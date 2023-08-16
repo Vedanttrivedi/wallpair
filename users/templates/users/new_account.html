@@ -1,0 +1,61 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog/register.css' %}">
+
+<style>
+    input
+    {
+        width:100%;
+    }
+    body
+    {
+        color:#5800c3;
+        font-weight:bold;
+        font-size:20px;
+        background-color:white;
+    }
+    .my
+    {
+        color:#5800c3;
+        font-size:20px;
+        margin-top:10px;
+    }
+</style>
+{% block content %}
+<p style="text-align:center;color:yellow;font-size:30px;">Manage Your  Account</p>
+<form method="post">
+    {% csrf_token %}
+    <p style="color:orange;font-size:25px;">Account Visiblity</p>
+    {% if user.profile.typee is 0 %}
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Public:<input type="radio" value="0" required name="typee" checked></span>
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Private:<input type="radio" value="1" required name="typee"></span>
+{% else %}
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Public:<input type="radio" value="0" required name="typee" ></span>
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Private:<input type="radio" value="1" required name="typee" checked></span>
+{% endif %}<br><br>
+    <p style="color:orange;font-size:25px;">Repost:(Your followers can Repost your posts)<br></p>
+    {% if user.profile.clone is 0 %}
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">yes:<input type="radio" value="0" required name="repost" checked></span>
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">no:<input type="radio" value="1" required name="repost" ></span>
+    {% else %}
+    
+    <span class="my" style="color:#5800c3;
+        font-size:25px;margin-top:10px;">yes:<input type="radio" value="0" required name="repost" ></span>
+    
+    <span class="my" style="color:#5800c3;
+        font-size:25px;margin-top:10px;">no:<input type="radio" value="1" required name="repost" checked></span>
+    {% endif %}
+
+    <br>
+    <br><center>
+    <input type="submit" value="Update" class="btn" style="padding:10px;border:1px solid yellow;background-color:black;font-size:20px;color:yellow;"></center>
+</form>
+{% endblock %}

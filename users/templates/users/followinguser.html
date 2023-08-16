@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% if users %}
+<ul style="list-style-type:none;">
+    {% for user in users %}
+        <div style="padding:5px;border-bottom:2px solid blue;font-size:16px;margin-top:2px;">
+            <a href="/search?user={{user.username}}"><li><img src="{{user.profile.image.url}}" width="35" height="35" alt="img" style="border-radius:30%;">{{user.username}}</li></a>
+            {% if request.user == user %}
+                <button onclick="undouser(this);">Unfollow</button>
+            {% endif%}
+        </div>
+
+    {% endfor%}
+    </ul>
+{% endif %}
+<script>
+     function undouser(e)
+  {
+console.log(+e.parentElement.children[0].innerText);
+     $.ajax({
+        type: "GET",
+        url:"/removeme/",
+        data:{
+
+        },
+        success: searchdone,
+        dataType:'html'
+
+     });
+
+   }
+
+function searchdone(data,textStatus,jqXHR)
+{
+
+  $("#results").html(data);
+  console.log(data);
+}
+</script>
+{% endblock %}

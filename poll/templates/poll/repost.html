@@ -1,0 +1,41 @@
+{% extends 'blog/base.html'%}
+<style>
+
+	    hr
+	    {
+	        color:#7f00ff;
+	    }
+</style>
+  {% load static %}
+  {% block content %}
+<h1>Repost</h1>
+
+    <form method="post" onsubmit="return che();">
+        {% csrf_token %}
+
+        <input type="text" placeholder="caption" value="{{question.question}}" required style="width:100%;" name="content">
+        <div style="display:flex;width:100%">
+            <div>
+                <img src="{{question.image1.url}}" width="400" height="300">
+            </div>
+             <div>
+                <img src="{{question.image2.url}}" width="400" height="300">
+            </div>
+
+        </div>
+        <input type="submit" value="Repost">
+        <p>Author of this post will be tagged automatically</p>
+
+    </form>
+    <script>
+    		$(function(){
+
+function che()
+{
+    document.querySelector("#submit").disabled=true;
+    document.querySelector("#load").style.visibility="visible";
+    document.querySelector("#sound2").play();
+    return true;
+}
+    </script>
+{% endblock %}

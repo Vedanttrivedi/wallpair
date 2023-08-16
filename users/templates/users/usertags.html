@@ -1,0 +1,609 @@
+{% extends 'blog/base.html'%}
+{% load humanize %}
+	{% load static %}
+	<style>
+	    .main
+	    {
+	        width:50%;
+            display:flex;
+            flex-direction:row;
+            flex-wrap:wrap;
+	    }
+	    .lol
+	    {
+	        padding: 3px;width: 50%;margin-top: 8px;
+	    }
+	    @media screen and(max-width:600px)
+	    {
+	        .lol
+	        {
+                width:100%;
+	        }
+	        div
+	        {
+	            background-color:blue;
+	        }
+	    }
+	</style>
+  {% block content %}
+  <div>{% if request.user.is_authenticated and request.user is not 'AnonymousUser'%}
+    <span id="xox" style="visibility: hidden;font-size: 1px;">1</span>
+    {% else %}
+    <span id="xox" style="visibility: hidden;font-size: 1px;">0</span>
+  {% endif %}
+<a href="/login/" id="link"></a>
+
+<audio id="sound1" src="/static/blog/thor.mp3"></audio>
+
+<audio id="sound2" src="/static/blog/jetha.mp3"></audio>
+<span id="top"></span>
+<h1 style="color:#5800c3;text-align:center;">Tags</h1>
+     {% for  question in questions %}
+        {% if question.show is 0 %}
+        <div style="width:100%;background-image: linear-gradient(to right, rgba(88,0,195,1), rgba(255,255,0,1));" >
+            <span style="color:red;font-size: 16px;color: lightgreen;text-transform:capitalize;text-shadow: none;margin-top: -5px;"><a href ="/search/?user={{question.poller.username}}" style="color:white;font-size:18px;"><img src="{{question.poller.profile.image.url}}" width="50" height="45" style="border-radius: 50%;" class="mr-2">{{question.poller.username}}</span></a>
+        {% if question.kick is not 0 and question.tags_set.all.count is 1 %}
+            <span style="color:black;font-size:12px;margin-left:20px;">Collabed</span><span style="color:red;font-size: 16px;color: lightgreen;text-transform:capitalize;text-shadow: none;margin-top: -5px;margin-left:75px;"><a href ="/search/?user={{question.tags_set.first.users.first.username}}"  style="color:black;font-size:18px;"><img src="{{question.tags_set.first.users.first.profile.image.url}}" width="50" height="45" style="border-radius: 50%;" class="mr-2"><b>{{question.tags_set.first.users.first.username}}</b></span></a>
+                
+            {% endif %}
+            <br>
+          <a href="whatsapp://send?text=https://wallpair.com/votes/{{question.id}}" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
+              <i class="fa fa-whatsapp fa-2x" style="float:right;pointer-events: auto;margin-top:-35px;margin-right:5px;color:#5800c3;"></i>
+          </a>
+          <h5 style="text-align: center; font-family:inherit;text-transform: capitalize;color:yellow;background-color:#5800c3;padding:7px;">
+            {{question.question}}
+            
+           </h5>
+
+       <div style="display: flex;flex-direction: row;width: 100%;padding:0px;">
+
+          <span id="qid" style="visibility: hidden;width:0%;">{{question.id}}</span>
+
+           {% if question.likes1_set.first.users.count > question.likes2_set.first.users.count %}
+          <div class="card" style="width:100%;height:100%;border-bottom:4px solid #5800c3;border-radius:10%;background-color:black;" >
+            {% else %}
+            <div class="card" style="width:100%;height:100%;border-radius:10%;background-color:black;" >
+            {% endif %}
+            {% if 'y' in question.typee  or 'mpost' in question.typee %}
+              <img src="{{question.apppolls_set.first.image1}}" alt="Avatar" style="width:100%;border:2px solid yellow;border-radius:10%;"  id="img1">
+            {% elif 'reddit' in question.typee %}
+              <img src="{{question.apppolls_set.first.image1}}" alt="Avatar" style="width:100%;border-top-left-radius:10%;border:2px solid orange;border-bottom-left-radius:10%;"  id="img1" height="350">
+            
+              {% else %}
+              <img src="{{question.image1.url}}" alt="Avatar" style="width:100%;border-radius:10%;border:2px solid yellow;max-height:400px;min-height:150px;"  id="img1">
+              {% endif %}
+              <div style="display: flex;flex-direction: row;margin-top: 5px;justify-content:center;" class="ml-13">
+                 {% if request.user  in question.likes1_set.first.users.all and request.user not in question.likes2_set.first.users.all %}
+                <img src="{% static 'blog/aaa.png'%}" alt="like"   height="45" width="50" onclick="add(this);" style="pointer-events: auto;" >
+                {% else %}
+                  <img src="{% static 'blog/bbbb.png'%}" alt="like"   height="45" width="50" onclick="add(this);document.getElementById('sound1').play();" style="pointer-events: auto;" >
+                {% endif %}
+                {% if request.user  in question.likes1_set.first.users.all and request.user not in question.likes2_set.first.users.all %}
+                <span style="font-size: 1px;color:blue;" >1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+                <a href="/pollinfo/{{question.id}}/l1"><span id="l1d"  name="{{l1d}}" value="l1" style="font-size:20px;color:yellow;" class="ml-2">{{question.likes1_set.first.users.count}}</span></a>
+                <!-- {% if request.user  in question.dlikes1_set.first.users.all  and request.user not in question.dlikes2_set.first.users.all%}
+                <img src="{% static 'blog/cc.png'%}" alt="like"   height="55" width="50" onclick="add1(this);"  class="ml-2">
+                {% else %}
+                  <img src="{% static 'blog/ddd.png'%}" alt="like"   height="55" width="50" onclick="add1(this);"  class="ml-2">
+                {% endif %}
+                {% if request.user  in question.dlikes1_set.first.users.all and request.user not in question.dlikes2_set.first.users.all%}
+                <span style="font-size: 1px;color:blue;">1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+
+                <a href="/pollinfo/{{question.id}}/dl1"><span id="dl1d" style="font-size:20px;">{{question.dlikes1_set.first.users.count}}</span></a>-->
+                </div>
+                <span style="font-size: 1px;" class="ml-4 img1per" ></span>
+
+              {% if 'reddit' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.channel1}}" class="ml-8 mt-2"><img src="/static/blog/reddit.png" width="40" height="30"></a>
+              </span>{% endif %}
+               {% if 'mpost' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.plink1}}" class="ml-8 mt-2"><img src="/static/blog/y.png" width="40" height="30"></a>
+              </span>{% endif %}
+               
+              </div>
+
+
+
+
+              {% if question.likes1_set.first.users.count < question.likes2_set.first.users.count %}
+          <div class="card" style="width: 100%;height:100%;border-bottom:4px solid #5800c3;border-radius:10%;background-color:black;margin-left:5px;" >
+            {% else %}
+            <div class="card" style="width: 100%;height:100%;border-radius:10%;background-color:black;margin-left:5px;" >
+            {% endif %}
+              {% if 'y' in question.typee    or 'mpost' in question.typee  %}
+              <img src="{{question.apppolls_set.first.image2}}" alt="Avatar" style="width:100%;border-radius:10%;border:2px groove blue;"  id="img2">
+        {% elif 'reddit' in question.typee %}
+              <img src="{{question.apppolls_set.first.image2}}" alt="Avatar" style="width:100%;border-radius:10%;border:2px solid orange;"  id="img2" height="350">
+            
+              {% else %}
+              <img src="{{question.image2.url}}" alt="Avatar" style="width:100%;max-height:400px;min-height:150px;border-radius:10%;border:2px groove blue;"  id="img1">
+              
+              {% endif %}
+              <div style="display: flex;flex-direction: row;margin-top: 5px;justify-content:center;" class="ml-10">
+                {% if request.user  in question.likes2_set.first.users.all and request.user not in question.likes1_set.first.users.all%}
+                <img src="{% static 'blog/aaa.png'%}" alt="like"   height="45" width="50" onclick="add2(this);"  style="pointer-events: auto;">
+                {% else %}
+                  <img src="{% static 'blog/bbbb.png'%}" alt="like"   height="45" width="50" onclick="add2(this);" style="pointer-events: auto;" >
+                {% endif %}
+                {% if request.user  in question.likes2_set.first.users.all and request.user not in question.likes1_set.first.users.all %}
+                <span style="font-size: 1px;color:blue;">1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+
+                <a href="/pollinfo/{{question.id}}/l2"><span id="l2d" style="font-size:20px;color:yellow;" class="ml-2">
+                  {{question.likes2_set.first.users.count}}
+                </span></a>
+                 <!-- {% if request.user  in question.dlikes2_set.first.users.all  and request.user not in question.dlikes1_set.first.users.all%}
+                <img src="{% static 'blog/cc.png'%}" alt="like"   height="55" width="50" onclick="add3(this);"  class="ml-2">
+                {% else %}
+                  <img src="{% static 'blog/ddd.png'%}" alt="like"   height="55" width="50" onclick="add3(this);"  class="ml-2">
+                {% endif %}
+                {% if request.user  in question.dlikes2_set.first.users.all and request.user not in question.dlikes1_set.first.users.all%}
+                <span style="font-size: 1px;color:blue;">1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+                <a href="/pollinfo/{{question.id}}/dl2" style="font-size:20px;"><span id="dl2d" value={{dl2d}} style="font-size:20px;">{{question.dlikes2_set.first.users.count}}</span></a>-->
+              </div>
+<span style="font-size: 1px;" class="ml-4 img2per" ></span>
+
+              {% if 'reddit' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.channel2}}" ><img src="/static/blog/reddit.png" width="40" height="30" class="ml-8 mt-2"></a>
+              </span>{% endif %}
+              {% if 'mpost' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.plink2}}" class="ml-8 mt-2"><img src="/static/blog/y.png" width="40" height="30" onclick="alert('noice');"></a>
+              </span>{% endif %}
+               
+
+              </div>
+
+</div>
+</div><br>
+<div style="display:flex;">
+    {% if 'y' in question.typee or 'mpost' in question.typee %}<span class="ml-4" style="padding:8px;background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));color:#5800c3;border-radius:5%;
+                width:80%;font-size:22px;color:yellow;text-align:center;">
+                {{question.apppolls_set.first.channel1}}
+              </span>{% endif %}
+    {% if 'y' in question.typee or 'mpost' in question.typee %}<span class="ml-4" style="padding:8px;background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));color:#5800c3;border-radius:5%;
+                width:80%;font-size:22px;color:yellow;text-align:center;">
+                {{question.apppolls_set.first.channel2}}
+              </span>{% endif %}
+    
+</div>
+ {% if 'mpost' in question.typee or 'y' in question.typee %}
+<br><center>
+<a href="/votes/{{question.id}}" style="color:yellow;text-align:center;text-decoration:none;">Watch Stats</a>
+</center>{% endif %}
+<div style="display:flex;justify-content:space-around;">
+    <div>
+    <a href="/votes/{{question.id}}"><i class="fa fa-comment fa-3x" style="color:white;"></i></a><span style="font-size:20px;color:yellow;" class="ml-2">{{question.comments_set.all.count}}</span></div>
+    {% if question in request.user.profile.mysave.all %}
+        <span class="ml-10">
+            <i class="fa fa-star fa-3x" style="color:#5800c3;" onclick="Save(this);"></i>
+        <span style="font-size:1px;">{{question.id}}</span>
+        <span style="font-size:1px;">1</span>
+       
+        {% else %}
+        <i class="fa fa-star fa-3x" style="color:white;" onclick="Save(this);"></i>
+        <span style="font-size:1px;">{{question.id}}</span>
+        <span style="font-size:1px;">1</span>
+         </span>
+    {% endif %}
+    
+    {% if question in request.user.profile.mysave.all %}
+        
+        {% else %}
+         <span style="font-size:1px;">1</span>
+    {% endif %}
+   
+<br><br>
+         {% if 'location' in question.typee %}
+          <a href="/categorie/location" style="color:yellow;">
+            <img src="/static/blog/loc.png" alt="img" width="30" height="20" class="ml-2">
+      location
+          </a>
+         {% endif %}
+         {% if 'memes' in question.typee or 'reddit' in question.typee%}
+          <a href="/categorie/memes" style="color:yellow;">
+            <img src="/static/blog/mem.png" alt="img" width="30" height="20" class="ml-2">
+      memes
+          </a>
+         {% endif %}
+        {% if 'art' in question.typee %}
+          <a href="/categorie/art" style="color:yellow;">
+            <img src="/static/blog/mem.png" alt="img" width="30" height="20" class="ml-2">
+      memes
+          </a>
+         {% endif %}
+
+         {% if 'food' in question.typee %}
+          <a href="/categorie/food" style="color:yellow;">
+            <img src="/static/blog/fod.png" alt="img" width="30" height="20" class="ml-2">
+    food
+          </a>
+         {% endif %}
+
+         {% if 'cars' in question.typee %}
+          <a href="/categorie/cars" style="color:yellow;">
+            <img src="/static/blog/veh.png" alt="img" width="30" height="20" class="ml-2">
+      vehicles
+          </a>
+         {% endif %}
+
+         {% if 'movies' in question.typee %}
+          <a href="/categorie/movies">
+            <img src="/static/blog/mov.png" alt="img" width="30" height="20" class="ml-2">
+      movies
+          </a>
+         {% endif %}
+         {% if 'code' in question.typee %}
+          <a href="/categorie/code" style="color:yellow;">
+            <img src="/static/blog/cod.png" alt="img" width="30" height="20" class="ml-2">
+      Code
+          </a>
+         {% endif %}
+         {% if 'bb' in question.typee %}
+          <a href="/categorie/bb" style="color:yellow;">
+            <img src="/static/blog/gam.png" alt="img" width="30" height="20" class="ml-2">
+      Code
+          </a>
+         {% endif %}
+
+         {% if 'sports' in question.typee %}
+          <a href="/categorie/sports" style="color:yellow;"> 
+            <img src="/static/blog/spo.png" alt="img" width="30" height="20" class="ml-2">
+      sports
+          </a>
+         {% endif %}
+
+         {% if 'gaming' in question.typee %}
+          <a href="/categorie/gaming" style="color:yellow;">
+            <img src="/static/blog/gam.png" alt="img" width="30" height="20" class="ml-2">
+      games
+          </a>
+         {% endif %}
+
+         {% if 'gadgets' in question.typee %}
+          <a href="/categorie/gadgets" style="color:yellow;">
+            <img src="/static/blog/gad.png" alt="img" width="30" height="20" class="ml-2">
+      sports
+          </a>
+         {% endif %}
+
+{% if 'roast' in question.typee %}
+          <a href="/categorie/roast" style="color:yellow;">
+            <img src="/static/blog/roa.jpg" alt="img" width="30" height="20" class="ml-2">
+      roast
+          </a>
+         {% endif %}
+         {% if 'art' in question.typee %}
+          <a href="/categorie/art" style="color:yellow;">
+            <img src="/static/blog/art.png" alt="img" width="30" height="20" class="ml-2">
+      Art
+          </a>
+         {% endif %}
+
+         </div>
+         <br>
+         <span class="ml-6" style="float:right;color:teal;">{{ question.date_posted|naturaltime|capfirst }}
+           {% if 'y' in question.typee %}
+         <img src="{% static 'blog/y.png' %}" width="50" height="50">
+         {% endif %}
+           {% if 'reddit' in question.typee %}
+         <img src="{% static 'blog/reddit.png' %}" width="50" height="30">
+         {% endif %}
+
+          </span>
+          <br>
+         <hr  size="5" color="deeppink;">
+         {% else %}
+         <!--
+          private polls
+         -->
+         {% for tag in tags %}
+         {% if tag.poll == question %}
+         {% if request.user.is_authenticated  %}
+         {% if request.user == question.poller or request.user in tag.users.all %}
+            <div style="width:100%;" >
+            <span style="color:red;font-size: 16px;color: lightgreen;text-transform:capitalize;text-shadow: none;margin-top: -5px;"><a href ="/search/?user={{question.poller.username}}" ><img src="{{question.poller.profile.image.url}}" width="50" height="45" style="border-radius: 50%;border:1px solid deeppink;" class="mr-2">{{question.poller.username}}</span></a>
+        {% if question.kick is not 0 and question.tags_set.all.count is 1 %}
+            <span style="color:yellow;font-size:20px;margin-left:20px;">Collabed</span><span style="color:red;font-size: 16px;color: lightgreen;text-transform:capitalize;text-shadow: none;margin-top: -5px;margin-left:40px;"><a href ="/search/?user={{question.tags_set.first.users.first.username}}" ><img src="{{question.tags_set.first.users.first.profile.image.url}}" width="50" height="45" style="border-radius: 50%;border:1px solid deeppink;" class="mr-2">{{question.tags_set.first.users.first.username}}</span></a>
+                
+            {% endif %}
+            <br>
+          <a href="whatsapp://send?text=https://wallpall.pythonanywhere.com/votes/{{question.id}}" data-action="share/whatsapp/share" onClick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;" target="_blank" title="Share on whatsapp">
+          <img src="{% static 'blog/w.png'%}" width="30" height="30"  style="float:right">
+          </a>
+          <h5 style="text-align: center;font-family: sans-serif;text-transform: capitalize;color:#5800c3;">
+            {{question.question}}
+            
+           </h5>
+
+       <div style="display: flex;flex-direction: row;width: 100%;padding:0px;">
+
+          <span id="qid" style="visibility: hidden;width:1%;">{{question.id}}</span>
+
+           {% if question.likes1_set.first.users.count > question.likes2_set.first.users.count %}
+          <div class="card" style="width:100%;height:100%;border-bottom:4px solid #5800c3;border-radius:10%;background-color:black;max-height:450px;" >
+            {% else %}
+            <div class="card" style="width:100%;height:100%;border-radius:10%;background-color:black;max-height:450px;" >
+            {% endif %}
+            {% if 'y' in question.typee or 'reddit' in question.typee or 'mpost' in question.typee %}
+              <img src="{{question.apppolls_set.first.image1}}" alt="Avatar" style="width:100%;border-top-left-radius:10%;border:2px solid orange;"  id="img1">
+
+              {% else %}
+              <img src="{{question.image1.url}}" alt="Avatar" style="width:100%;border-top-left-radius:10%;border:2px solid deeppink;max-height:400px;min-height:150px;"  id="img1">
+              {% endif %}
+              <div style="display: flex;flex-direction: row;margin-top: 5px;justify-content:center;" class="ml-13">
+                 {% if request.user  in question.likes1_set.first.users.all and request.user not in question.likes2_set.first.users.all %}
+                <img src="{% static 'blog/aaa.png'%}" alt="like"   height="45" width="50" onclick="add(this);"  style="pointer-events: auto;">
+                {% else %}
+                  <img src="{% static 'blog/bbbb.png'%}" alt="like"   height="45" width="50" onclick="add(this);document.getElementById('sound1').play();"  style="pointer-events: auto;">
+                {% endif %}
+                {% if request.user  in question.likes1_set.first.users.all and request.user not in question.likes2_set.first.users.all %}
+                <span style="font-size: 1px;color:blue;" >1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+                <a href="/pollinfo/{{question.id}}/l1"><span id="l1d"  name="{{l1d}}" value="l1" style="font-size:20px;" class="ml-2">{{question.likes1_set.first.users.count}}</span></a>
+                <!-- {% if request.user  in question.dlikes1_set.first.users.all  and request.user not in question.dlikes2_set.first.users.all%}
+                <img src="{% static 'blog/cc.png'%}" alt="like"   height="55" width="50" onclick="add1(this);"  class="ml-2">
+                {% else %}
+                  <img src="{% static 'blog/ddd.png'%}" alt="like"   height="55" width="50" onclick="add1(this);"  class="ml-2">
+                {% endif %}
+                {% if request.user  in question.dlikes1_set.first.users.all and request.user not in question.dlikes2_set.first.users.all%}
+                <span style="font-size: 1px;color:blue;">1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+
+                <a href="/pollinfo/{{question.id}}/dl1"><span id="dl1d" style="font-size:20px;">{{question.dlikes1_set.first.users.count}}</span></a>-->
+                </div>
+                <span style="font-size: 1px;" class="ml-4 img1per" ></span>
+
+              {% if 'reddit' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.channel1}}" class="ml-8 mt-2"><img src="/static/blog/reddit.png" width="40" height="30"></a>
+              </span>{% endif %}
+               {% if 'mpost' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.plink1}}" class="ml-8 mt-2"><img src="/static/blog/y.png" width="40" height="30"></a>
+              </span>{% endif %}
+
+              </div>
+
+
+
+
+              {% if question.likes1_set.first.users.count < question.likes2_set.first.users.count %}
+          <div class="card" style="width: 100%;height:100%;border-bottom:4px solid #5800c3;border-radius:10%;background-color:black;" >
+            {% else %}
+            <div class="card" style="width: 100%;height:100%;border-radius:10%;background-color:black;" >
+            {% endif %}
+              {% if 'y' in question.typee  or 'reddit' in question.typee  or 'mpost' in question.typee  %}
+              <img src="{{question.apppolls_set.first.image2}}" alt="Avatar" style="width:100%;border-top-right-radius:10%;border:2px groove orange;"  id="img2" style="pointer-events: auto;">
+
+              {% else %}
+              <img src="{{question.image2.url}}" alt="Avatar" style="width:100%;border-top-right-radius:10%;border:2px solid deeppink;max-height:400px;min-height:150px;"  id="img1">
+              {% endif %}
+              <div style="display: flex;flex-direction: row;margin-top: 5px;justify-content:center;" class="ml-10">
+                {% if request.user  in question.likes2_set.first.users.all and request.user not in question.likes1_set.first.users.all%}
+                <img src="{% static 'blog/aaa.png'%}" alt="like"   height="45" width="50" onclick="add2(this);"  style="pointer-events: auto;">
+                {% else %}
+                  <img src="{% static 'blog/bbbb.png'%}" alt="like"   height="45" width="50" onclick="add2(this);" style="pointer-events: auto;" >
+                {% endif %}
+                {% if request.user  in question.likes2_set.first.users.all and request.user not in question.likes1_set.first.users.all %}
+                <span style="font-size: 1px;color:blue;">1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+
+                <a href="/pollinfo/{{question.id}}/l2"><span id="l2d" style="font-size:20px;" class="ml-2">
+                  {{question.likes2_set.first.users.count}}
+                </span></a>
+                 <!-- {% if request.user  in question.dlikes2_set.first.users.all  and request.user not in question.dlikes1_set.first.users.all%}
+                <img src="{% static 'blog/cc.png'%}" alt="like"   height="55" width="50" onclick="add3(this);"  class="ml-2">
+                {% else %}
+                  <img src="{% static 'blog/ddd.png'%}" alt="like"   height="55" width="50" onclick="add3(this);"  class="ml-2">
+                {% endif %}
+                {% if request.user  in question.dlikes2_set.first.users.all and request.user not in question.dlikes1_set.first.users.all%}
+                <span style="font-size: 1px;color:blue;">1</span>
+                {% else %}
+                <span style="font-size: 1px;color:blue;">0</span>
+                {% endif %}
+                <a href="/pollinfo/{{question.id}}/dl2" style="font-size:20px;"><span id="dl2d" value={{dl2d}} style="font-size:20px;">{{question.dlikes2_set.first.users.count}}</span></a>-->
+              </div>
+<span style="font-size: 1px;" class="ml-4 img2per" ></span>
+
+              {% if 'reddit' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.channel2}}" ><img src="/static/blog/reddit.png" width="40" height="30" class="ml-8 mt-2"></a>
+              </span>{% endif %}
+              {% if 'mpost' in question.typee %}<span class="ml-4">
+                <a href="{{question.apppolls_set.first.plink2}}" class="ml-8 mt-2"><img src="/static/blog/y.png" width="40" height="30"></a>
+              </span>{% endif %}
+
+              </div>
+
+</div>
+</div><br>
+<div style="display:flex;justify-content:space-around;">
+    <div>
+    <a href="/votes/{{question.id}}"><i class="fa fa-comment fa-3x" style="color:white;"></i></a><span style="font-size:20px;color:yellow;" class="ml-2">{{question.comments_set.all.count}}</span></div>
+    {% if question in request.user.profile.mysave.all %}
+        <span class="ml-10" style="color:#5800c3;"><i class="fa fa-star fa-3x" style="color:#5800c3;" onclick="unsave(this);"></i></span>
+        {% else %}
+        <i class="fa fa-star fa-3x" style="color:white;" onclick="save(this);"></i>
+    {% endif %}
+    <span style="font-size:1px;">{{question.id}}</span>
+     {% if question in request.user.profile.mysave.all %}
+    <span style="font-size:1px;">1</span>
+    {% else %}
+    <span style="font-size:1px;">0</span>
+    {% endif %}
+    
+    
+    
+    {% if question.tags_set.all.count is not 0 and question.kick is  0%}
+    <div>
+        <i class="fa fa-tag fa-3x" aria-hidden="true" style="color:white"></i>
+        <a href="{% url 'poll-tags' question.id %}"><span style="color:yellow;">{{question.tags_set.all.count}}</a>
+    </div>
+    {% endif %}
+    
+<br><br>
+         {% if 'location' in question.typee %}
+          <a href="/categorie/location">
+            <img src="/static/blog/loc.png" alt="img" width="30" height="20" class="ml-2">
+      location
+          </a>
+         {% endif %}
+         {% if 'memes' in question.typee or 'reddit' in question.typee%}
+          <a href="/categorie/memes">
+            <img src="/static/blog/mem.png" alt="img" width="30" height="20" class="ml-2">
+      memes
+          </a>
+         {% endif %}
+        {% if 'art' in question.typee %}
+          <a href="/categorie/art">
+            <img src="/static/blog/mem.png" alt="img" width="30" height="20" class="ml-2">
+      memes
+          </a>
+         {% endif %}
+
+         {% if 'food' in question.typee %}
+          <a href="/categorie/food">
+            <img src="/static/blog/fod.png" alt="img" width="30" height="20" class="ml-2">
+    food
+          </a>
+         {% endif %}
+
+         {% if 'cars' in question.typee %}
+          <a href="/categorie/cars">
+            <img src="/static/blog/veh.png" alt="img" width="30" height="20" class="ml-2">
+      vehicles
+          </a>
+         {% endif %}
+
+         {% if 'movies' in question.typee %}
+          <a href="/categorie/movies">
+            <img src="/static/blog/mov.png" alt="img" width="30" height="20" class="ml-2">
+      movies
+          </a>
+         {% endif %}
+         {% if 'code' in question.typee %}
+          <a href="/categorie/code">
+            <img src="/static/blog/cod.png" alt="img" width="30" height="20" class="ml-2">
+      Code
+          </a>
+         {% endif %}
+         {% if 'bb' in question.typee %}
+          <a href="/categorie/bb">
+            <img src="/static/blog/gam.png" alt="img" width="30" height="20" class="ml-2">
+      Code
+          </a>
+         {% endif %}
+
+         {% if 'sports' in question.typee %}
+          <a href="/categorie/sports">
+            <img src="/static/blog/spo.png" alt="img" width="30" height="20" class="ml-2">
+      sports
+          </a>
+         {% endif %}
+
+         {% if 'gaming' in question.typee %}
+          <a href="/categorie/gaming">
+            <img src="/static/blog/gam.png" alt="img" width="30" height="20" class="ml-2">
+      games
+          </a>
+         {% endif %}
+
+         {% if 'gadgets' in question.typee %}
+          <a href="/categorie/gadgets">
+            <img src="/static/blog/gad.png" alt="img" width="30" height="20" class="ml-2">
+      sports
+          </a>
+         {% endif %}
+
+{% if 'roast' in question.typee %}
+          <a href="/categorie/roast">
+            <img src="/static/blog/roa.jpg" alt="img" width="30" height="20" class="ml-2">
+      roast
+          </a>
+         {% endif %}
+         {% if 'art' in question.typee %}
+          <a href="/categorie/art">
+            <img src="/static/blog/art.png" alt="img" width="30" height="20" class="ml-2">
+      Art
+          </a>
+         {% endif %}
+
+         </div>
+         <br>
+         <span class="ml-6" style="float:right;color:teal;">{{question.date_posted | date:"F d, Y"}}
+           {% if 'y' in question.typee %}
+         <img src="{% static 'blog/y.png' %}" width="50" height="50">
+         {% endif %}
+           {% if 'reddit' in question.typee %}
+         <img src="{% static 'blog/reddit.png' %}" width="50" height="30">
+         {% endif %}
+
+          </span>
+          <br>
+         <hr  size="5" color="pink;">
+        
+         {% endif %}
+          {% endif %}
+          {% endif %}
+        {% endfor %}
+
+         {% endif %}
+        {% endfor %}     
+
+<script type="text/javascript" src="{% static 'blog/main.js' %}"></script>
+<script>
+ 	function Save(e)
+    {
+			
+			
+			var url = "";
+			if(parseInt(e.nextElementSibling.nextElementSibling.innerHTML) ==1 )
+			{
+			    alert('removed from favourites');
+			    url = "/unsavepost/"+parseInt(e.nextElementSibling.innerText);
+			    e.style.color="white";
+			    e.nextElementSibling.nextElementSibling.innerHTML = 0;
+			    
+			}
+			else
+			{
+			    url = "/savepost/"+parseInt(e.nextElementSibling.innerText);
+			    	e.style.color="#5800c3";
+			    	alert('added in favourites');
+			    	e.nextElementSibling.nextElementSibling.innerHTML=1;
+			}
+		
+			$.ajax({
+				type: "GET",
+			
+				url:url,
+				data:{
+
+				},
+				success: function()
+				{
+				    
+				},
+				dataType:'html'
+
+			});
+
+    }
+
+
+</script>
+{% endblock %}

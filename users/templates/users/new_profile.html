@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog/register.css' %}">
+
+<style>
+    input
+    {
+        width:100%;
+    }
+</style>
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Username :</span><input type="text" value="{{user.username}}" required name="username" class="form__input" style="width:100%;">
+    <br>
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Email : </span> <input type="text" value="{{user.email}}" required name="email" class="form__input" style="width:100%;">
+    </span><br>
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Bio :</span><textarea rows="5" cols="20" name="bio" style="width:100%;" >{{user.profile.bio}}</textarea>
+    <br>
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Add Link(website or something else)</span> :<input type="text" value="{{user.profile.link}}"  name="link" class="form__input" style="width:100%;">
+    <br>
+    
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Profile_Picture:</span>
+     <input type="file" name="pic" ><br>
+     
+    <span class="my" style="color:#5800c3;
+        font-size:20px;margin-top:10px;">Current  Profile_Picture:</span>
+     <a href="{{user.profile.image.url}}">Profile</a>
+     <center>
+    <input type="submit" value="Update" class="btn" style="padding:7px;border:1px solid yellow;background-color:black;font-size:10px;color:yellow;"></center>
+</form>
+{% endblock %}

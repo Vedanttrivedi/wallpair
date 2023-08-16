@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="container">
+	<h1>sorry,can only update your poll question </h1>
+	<form  method="post">
+		{% csrf_token%}
+		<input type="text" name="q" value="{{poll.question}}" class="p-3 w-40" style="border:1px solid pink;">
+		<input type="submit" name="" value="submit">
+	</form>
+</div>
+{% endblock %}

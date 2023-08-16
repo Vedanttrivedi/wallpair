@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
+<h1 style="color:yellow;text-align:center;"><a href="/mycollab/">Collabs here</a></h1>
+<h1 style="color:yellow;text-align:center;"> Requests<span style="color:pink;">{{user.profile.pending.all.count}}</span></h1>
+
+  <div>
+    {% for user in user.profile.pending.all %}
+    <div>
+      <span style="color:white;font-size:17px;" class="mr-3">{{user.username}}</span><br><a href="/addme/{{user.username}}" class="btn btn-outline-success">accept</a><a href="/removeme/{{user.username}}"  class="btn btn-outline-danger">decline</a>
+      <hr color="blue">
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

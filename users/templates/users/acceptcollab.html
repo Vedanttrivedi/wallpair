@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	<center>
+	    <h1 style="color:yellow;">
+    	    <img src="{{i.poller.profile.image.url}}" style="border-radius:50%;max-height:80px;" width="50">
+    	    <span style="color: #5800c3;">{{i.poller.username}} sent collab</span>
+	    </h1>
+    <br>
+	<span style="color:white;font-size: 20px;">{{i.question}}</span><br>
+	<span style="color:yellow;font-size:18px;">image by {{i.poller.username}}</span> <br>
+	<img src="{{i.image1.url}}" width="90" height="80"><br><br>
+	<!--{% if i.typee is 0 %}
+	<p>both images can be likes</p>
+	{% else %}
+	<p>only one image can be liked from 2</p>
+	
+	{% endif %}-->
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<label style="color:yellow;font-size: 18px;">Your image</label>
+		<span></span><input type="file" name="image" required style="color:white;"><br>
+		<input type="submit" name="" value="Submit" class="btn btn-outline-warning">
+	</form></center>
+{% endblock %}

@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+	<style>
+body {
+   
+  font-size:16px;
+}
+img
+{
+    pointer-events: none;
+}
+.nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index:5000px;
+    height: 55px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    background-color: black;
+    display: flex;
+    
+}
+
+.nav__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 50px;
+    overflow: none;
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #444444;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.nav__link:hover {
+    background-color: #eeeeee;
+}
+
+.nav__link--active {
+    color: #009578;
+}
+
+.nav__icon {
+    font-size: 18px;
+}
+
+	</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block meta %}
+<meta name="description" content="wallpair,social media,compare two images,two youtubers two youtube videos,collab with other users">
+<meta name="keywords" content="wallpair,compare images,compare two things, compare anything,compare youtubers">
+{% endblock meta %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+<link rel="icon" 
+      type="image/png" 
+      href="https://www.wallpair.com/static/blog/wallpair_logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="{% static 'blog/njq.js' %}"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-181052445-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-181052445-1');
+</script>
+</head>
+<body style="background-color:black;">
+    <div style="width:100%;display:flex;justify-content:space-around;">
+       <span style="font-size:29px;color:white;"><img src="{% static 'blog/mylogo.png' %}" width="110" height="65"><span style="margin-left:-15px;">wall</span><span style="color:yellow;">pair</span></span>
+<button style="padding:2px;background-color:black;border:1px solid yellow;color:yellow;border-radius:20%;" onclick="alert('coming soon');">Contest</button>
+<span  class="mr-20" style="float:right;"><a href="/find/"><i class="fa fa-search fa-2x" aria-hidden="true" style="color:yellow;"></i></a></span>
+        </div>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+ {% if request.user.is_authenticated and request.user is not 'AnonymousUser'%}
+ <!-- navbar for logged in users-->
+ <nav class="nav">
+  <a href="/" class="nav__link" style="text-decoration:none;">
+    <i class="fa fa-home fa-fw fa-2x" style="color:yellow;"></i>
+    
+  </a>
+ 
+ <a href="/topcharts/" class="nav__link" style="text-decoration:none;">
+    <i class="fa fa-columns fa-2x" style="color:yellow;"></i>
+    
+  </a>
+  <a href="/create/" class="nav__link" style="text-decoration:none;">
+    <i class="fa fa-plus fa-2x" aria-hidden="true" style="color:yellow;"></i>
+    
+  </a>
+  <a href="/requestuser/" class="nav__link" style="text-decoration:none;">
+     <i class="fa fa-bell fa-2x" style="color:yellow;"></i>
+    
+  </a>
+   <a href="/search/?user={{request.user}}" class="nav__link nav__link--active">
+    <img src="{{request.user.profile.image.url}}" width="50" height="40" style="border-radius:50%;">
+    
+  </a>
+ 
+  
+</nav>
+ {% else %}
+ <!-- navbar for logged out in users-->
+ <nav class="nav">
+  
+ <a href="/" class="nav__link" style="text-decoration:none;">
+    <i class="fa fa-home fa-fw fa-3x" style="color:yellow;"></i>
+    
+  </a>
+ 
+  
+  <a href="/find/" class="nav__link" style="text-decoration:none;">
+    <i class="fa fa-search fa-2x" style="color:yellow;"></i>
+    
+  </a>
+  <a href="/create/" class="nav__link" style="text-decoration:none;">
+    <span style="font-size:35px;color:yellow;">+</span>
+    
+  </a>
+  
+  
+  <a href="/login/" class="nav__link" style="text-decoration:none;">
+    <i class="fa fa-user fa-3x" style="color:yellow;"></i>
+    
+  </a>
+ <a href="https://wallpair.com/team/" class="nav__link" style="text-decoration:none;">
+   <i class="fa fa-info-circle fa-3x" aria-hidden="true" style="color:yellow;"></i>
+ </a>
+  
+</nav>
+ {% endif %}
+<!--
+<form action="/">
+    {%  if 'white' in request.COOKIES.color %}
+    <input type="radio" name="color" value="white" id="white" checked onclick="clr()"><span style="color:teal;">Light</span></span>
+    <span  id="get" style="color:red;font-size:1px;">1</span>
+    <input type="radio" name="color" value="black" class="ml-2" id="black" onclick="clr()" style="color:teal;"><span style="color:teal;"> Dark</span>
+    {% else %}
+    <input type="radio" name="color" value="white" id="white"  onclick="clr()" ><span style="color:teal;">Light</span>
+    <span style="color:red;font-size:1px;" id="get"> 2</span>
+    <input type="radio" name="color" value="black" class="ml-2" id="black" onclick="clr()" style="color:teal;" checked><span style="color:teal;">Dark</span>
+    {% endif %}
+</form>-->
+
+
+<p style="font-size:">
+{% if messages %}
+
+	{% for message in messages %}
+		<div class="alert alert-{{message.tags}}">
+			{{message}}
+		</div>
+	{% endfor %}
+{% endif %}
+<div style="padding:0px;" class="container" >
+
+    {% block content %}{% endblock %}
+
+</div>
+</body>
+
+<!--
+<script>
+   var white = document.querySelector("#white");
+   var black = document.querySelector("#black");
+   if((document.querySelector("#get").innerText)==1)
+   {
+       document.body.style.backgroundColor="white";
+
+   }
+   else
+   {
+       document.body.style.backgroundColor="black";
+
+   }
+   function clr()
+   {
+       if(white.checked==true)
+        {
+                document.body.style.backgroundColor="white";
+             $.ajax({
+            type:"GET",
+            url:'/',
+            data:{
+              'color':'white',
+            },
+            success:function()
+            {
+            }
+          ,
+            dataType:'html'
+        })
+        }
+        else if (black.checked==true)
+        {
+                document.body.style.backgroundColor="black";
+                $.ajax({
+            type:"GET",
+            url:'/',
+            data:{
+              'color':'black',
+            },
+            success:function()
+            {
+            }
+          ,
+            dataType:'html'
+
+        })
+
+        }
+   }
+</script>-->
+</html>

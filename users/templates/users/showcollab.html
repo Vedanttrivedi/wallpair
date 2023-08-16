@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	{% if len is 0 %}
+		<h1 style="color:yellow;text-align:center;">no invites</h1>
+	{% else %}
+		{% for i in q %}
+		<img src="{{i.poller.profile.image.url}}" style="border-radius:50%;max-height:80px;" width="50"><span style="color: #5800c3;">{{i.poller.username}}</span>
+		<p style="font-size: 18px;color:white;text-align:center;">
+			{{i.question}}
+		</p>
+			<a href="/acceptcollab/{{i.id}}" class="btn btn-outline-warning">accept</a>
+			<a href="/removecollab/{{i.id}}" class="btn btn-outline-danger">remove</a>	
+
+			<hr style="color:white;">
+		{% endfor %}
+	{% endif %}
+{% endblock %}

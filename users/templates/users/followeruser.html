@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% if users %}
+<ul style="list-style-type:none;">
+    {% for user in users %}
+        <div style="padding:5px;border-bottom:2px solid blue;font-size:16px;margin-top:2px;">
+
+
+            <a href="/search?user={{user.username}}"><li><img src="{{user.profile.image.url}}" width="35" height="35" alt="img" style="border-radius:30%;">{{user.username}}</li></a>
+
+            {% if request.user == myuser %}
+                <a href="/removeme1/{{user.username}}" class="btn btn-outline-danger">remove</a>
+            {% endif%}
+            {% if request.user in user.profile.follwers.all and  request.user != user%}
+                    <a href="/removeme/{{user.username}}" class="btn btn-outline-info">unfollow</a>
+            {% endif %}
+            {% if request.user in user.profile.pending.all  and request.user != user %}
+                    <a href="/removeme/{{user.username}}" class="btn btn-outline-info">Requested</a>
+            {% endif %}
+            {% if request.user not in user.profile.follwers.all and  request.user not in user.profile.pending.all  and request.user != user %}
+                    <a href="/addme/{{user.username}}" class="btn btn-outline-info">Follow</a>
+            {% endif %}
+
+
+        </div>
+
+    {% endfor%}
+    </ul>
+{% endif %}
+{% endblock %}

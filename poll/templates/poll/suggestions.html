@@ -1,0 +1,14 @@
+
+{% if users %}
+
+    {% for user in users %}
+
+        <div style="padding:5px;border:1px solid #5800c3;width:30%;">
+            <img src="{{user.profile.image.url}}" width="150" height="150">
+            <h3>{{user.username}}</h3>
+            <a href="/search/?user={{user.username}}" class="btn btn-outline-info">Follow</a>
+        </div>
+
+    {% endfor%}
+
+{% endif %}

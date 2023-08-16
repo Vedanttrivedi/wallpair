@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<p style="font-size: 15px;font-family: serif;color:red;">{{poll.question}}</p>
+{% if users %}
+{% if len == 0 %}
+<p style="color: blue;font-size: 20px;">No User Found!</p>
+{% else %}
+<ul style="list-style-type: none;">
+	<p style="color:deeppink;float: right;font-size: 18px;">{{len}} Users</p>
+	{% for user in users%}
+			<div style="padding: 3px;border-bottom: 1px solid blue;border-width: 50%;">
+			<li>
+				<img src="{{user.profile.image.url}}" width="
+				50" height="50">
+				<a href="/search?user={{user.username}}" class=" mr-2">{{user.username}}</a>
+			</li>
+		</div>
+	{% endfor %}
+	</ul>
+{% endif %}
+{% endif %}
+
+{% endblock %}

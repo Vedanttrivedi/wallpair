@@ -1,0 +1,107 @@
+<style type="text/css">
+
+body
+{
+    font-size:25px;
+}
+.mystyle {
+    border: 1px solid green;
+    border-radius: 10%;
+    display:inline-block;
+    width:50%;
+    text-align: center;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size:14px;
+    margin-top: 10px;
+}
+.text
+{
+	width: 100%;
+	border:1px solid red;
+	padding: 10px 15px;
+	display: block;
+}
+.text:focus
+{
+	outline: 0;
+}
+
+</style>
+{% extends 'blog/base.html'%}
+{% load crispy_forms_tags %}
+{% block content %}
+
+		<audio id="sound2" src="/static/blog/reload.mp3"></audio>
+
+	    <p style="visibility:hidden;color:white;font-size:20px;" id="load">Loading...</p>
+<div class="container mt-3" >
+    <span style="color:red;">2 Youtube Videos<a href="/mycreate/" class="ml-2">here</a>
+		<h4 style="color:deeppink;text-align:center;">2 Youtubers</h4>
+	<form method="post" onsubmit="return che();">
+
+		{% csrf_token %}
+		<input type="text" name="question" placeholder="Your Poll " required class="text">
+		<br>
+		<input type="text" name="urlo" placeholder="any full video url of your youtuber" required style="width: 90%;border:1px solid blue;padding: 10px 15px;">
+		<br><br>
+		<input type="text" name="urlt" placeholder="any full video url of your youtuber" required style="width: 90%;border:1px solid blue;padding: 10px 15px;">
+		<br><br>
+
+	    <input type="text" name="doe" value="" style="visibility: hidden;" id="doe" >
+		<input type="submit" value="Add" class="btn btn-outline-info pl-3 pr-3" id="submit" style="display: block;width:50%;">
+
+	</form>
+	<!--<span href="" class="mr-2" style="color:teal;">Tag</span>
+
+	<div id="tagy">
+
+	</div>
+	<br>
+		<input type="text" name="search" style="border:1px solid blue;padding:5px;width:60%;" id="search1" placeholder="add friends here">
+
+<div id="result" class="container">
+    		<div id="lol">
+
+    		</div>
+
+
+
+	</div>-->
+	<script>
+	$(function(){
+
+		$("#search1").keyup(function (){
+
+			$.ajax({
+				type: "GET",
+				url:"/userlinks1/",
+				data:{
+					'search':$("#search1").val().trim(),
+				},
+				success: searchdone,
+				dataType:'html'
+
+			});
+
+		});
+
+
+});
+function searchdone(data,textStatus,jqXHR)
+{
+
+	$("#lol").html(data);
+	console.log(data);
+}
+function che()
+{
+    document.querySelector("#submit").disabled=true;
+    document.querySelector("#sound2").play();
+    document.querySelector("#load").style.visibility="visible";
+
+    return true;
+}
+</script>
+
+{% endblock content %}

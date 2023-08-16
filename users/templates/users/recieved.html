@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	{% if len is 0 %}
+		<h1 style="text-align:center;color:yellow;font-size:30px;">No Collabs</h1>
+	{% else %}
+	
+		<h1 style="text-align:center;color:yellow;font-size:30px;">Recieved Collabs</h1>
+		{% for i in q %}
+		
+		<h1 style="text-align:center;color:yellow;font-size:30px;">Recieved Collabs</h1>
+		<img src="{{i.poller.profile.image.url}}" height="50"><span style="color: #5800c3;">{{i.poller.username}}</span>
+		<p style="font-size: 18px;color:yellow;">
+			{{i.question}}
+		</p>
+			<a href="/acceptcollab/{{i.id}}" class="btn btn-outline-success">accept</a>
+			<a href="/removecollab/{{i.id}}" class="btn btn-outline-danger">remove</a>	
+
+			<hr>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

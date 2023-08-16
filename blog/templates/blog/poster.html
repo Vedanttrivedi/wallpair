@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h2><span style="color:orangered;">{{view.kwagrs.username}} </span>'s all posts ({{page_obj.paginator.count}})</h2>
+	{% for obj in posts %}
+	<article class="media content-section">
+		<div class="media-body">
+	<div class="meta-data">
+		<img src="{{obj.author.profile.image.url}}" width="50" style="border-radius: 50%;" class="mr-2">
+				<a class="mr-2" href="{% url 'blogers' obj.author.id%}">{{obj.author}}</a>
+				<small class="text-muted">{{obj.date_posted}}</small>
+			</div>
+			<h2>
+				<a class="article-title" href="{% url 'blog-post' obj.id %}">{{obj.title}}</a>
+			</h2>
+			<p class="article-content">{{obj.content}}</p>
+		</div>
+	</article>
+	<hr>
+	{% endfor%}
+	{% if  is_paginated %}
+		{% if page_obj.has_next %}
+			<a href="?page={{page_obj.next_page_number}}" class="btn btn-outline-info">next</a>
+		{% endif %}
+
+		{% if page_obj.has_previous %}
+			<a href="?page={{page_obj.previous_page_number}}" class="btn btn-outline-info">prev </a>
+		{% endif %}
+	{% endif %}
+	{% endblock %}

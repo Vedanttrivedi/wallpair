@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{contest.name}} wallpair</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="{{poll.question}} wallpair">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body style="background-color:black;">
+    <center>
+<a href="/" style="text-decoration:none;"><span style="font-size:35px;color:white;"><img src="{% static 'blog/mylogo.png' %}" width="100" height="70">wall<span style="color:yellow;">pair</span></span></a></center>
+    <div class="container">
+<p style="font-size: 22px;font-family: serif;color:yellow;text-align:center;">{{contest.name}}</p>
+{% if users %}
+{% if len == 0 %}
+<p style="color: blue;font-size: 20px;">No User Found!</p>
+{% else %}
+<p style="color:deeppink;float: right;font-size: 30px;margin-right:10px;">{{contest.members.all.count}} Users</p>
+<br><br>
+
+
+	{% for i in  users %}
+	{% if i.username in user %}
+			<div style="padding: 3px;border-bottom: 1px solid #5800c3;border-width: 50%;margin-top:7px;">
+			
+				<img src="{{i.profile.image.url}}" width="
+				60" height="60" style="border-radius:50%;">
+				<a href="/search?user={{i.username}}"><span style="font-size:20px;color:white">{{i.username}}</span></a>
+				<br>
+				<a href="https://wallpair.com/follow/{{i.id}}">
+				{% if request.user in i.profile.follwers.all %}
+			    <button style="padding:10px;border:1px solid yellow;color:yellow;text-align:center;background-color:black;">UnFollow</button>
+			    {% else %}
+			    <button style="padding:10px;border:1px solid yellow;color:yellow;text-align:center;background-color:black;">Follow</button>
+			    {% endif %}
+			    </a>
+			    {% if request.user.username == contest.author.username %}
+			    <a href="/con/removefromcontest/{{contest.id}}/{{i.id}}">
+			        <button style="padding:10px;border:1px solid red;color:red;text-align:center;background-color:black;" onclick="alert('this user will not be part of further rounds of this contest but reaction on previous rounds will not be removed from this user')">Remove From Contest</button>
+			        </a>
+			    {% endif %}
+		</div>
+	{% endif %}
+	{% endfor %}
+	
+{% endif %}
+{% endif %}
+</div>
+</body>

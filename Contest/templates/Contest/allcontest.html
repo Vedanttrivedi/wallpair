@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<title>Contests wallpair</title>
+<meta name="description" content="contest wallpair">
+<meta name="keywords" content="iamge contest,contest of image,image contest wallpair">
+    <center>
+    <h1 style="color:#5800c3;">Contests</h1>
+        {% for contest in contests %}
+            <div style="display:flex;flex-direction:Column;margin:5px;padding:3px;">
+                <div style="display:flex;">
+                    <img src="{{contest.author.profile.image.url}}" width="50" height="50" style="border-radius:50%;margin-right:10px;">
+                <span style="color:white;font-size:18px;">{{contest.author.username}}</span>
+                </div>
+                <h5 style="color:yellow;">{{contest.name}}</h5>
+                
+                <br>
+                <p style="font-size:16px;color:white;">Started On ::: <span style="color:yellow;margin-left:10px;">{{contest.date}}</span></p>
+                <div style="display:flex;">
+<a href="https://wallpair.com/con/contest/{{contest.id}}">      
+<button style="padding:4px;background-color:black;border:1px solid yellow;color:yellow;padding:7px;border-radius:10%;margin-right:30px;" onclick="">View</button></a>
+
+<span style="color:#5800c3;font-size:17px;margin-right:50px;"><span style="color:#5800c3;">{{contest.members.all.count}}</span> members</span>
+                </div>
+                {% if contest.canjoin %}
+                    <p style="color:green;">Registrations Open</p>
+                {% else %}
+                    <p style="color:red;">Registrations Closed</p>
+                {% endif %}
+<hr style="border:1px solid  white;width:80%;">
+            </div>
+        {% endfor %}
+    </center>
+{% endblock %}

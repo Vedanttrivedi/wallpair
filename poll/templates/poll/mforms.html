@@ -1,0 +1,90 @@
+<style type="text/css">
+
+body
+{
+    font-size:25px;
+}
+.mystyle {
+    border: 1px solid green;
+    border-radius: 10%;
+    display: inline-block;
+    width:38%;
+    text-align: center;
+    padding: 10px 10px;
+    cursor: pointer;
+    font-size:20px;
+    margin-top: 10px;
+}
+.
+.text
+{
+	width: 100%;
+	border:1px solid red;
+	padding: 10px 15px;
+	display: block;
+}
+.text:focus
+{
+	outline: 0;
+}
+x:hover
+{
+    background-color:green;
+    transition:0.5s ease-out;
+}
+</style>
+{% extends 'blog/base.html'%}
+
+{% block content %}
+	<div class="container mt-2" >
+		<h4 style="color:deeppink;text-align:center;">Generate mEmE Post</h4>
+	<form method="post" >
+		{% csrf_token %}
+		<input type="text" name="question" placeholder="enter meme title" required class="text" style="width: 100%;border:1px solid green;padding: 10px 15px;display: block;">
+		<input type="submit" name="question" required class="text" value="create meme">
+		<input type="checkbox" name="show">
+		<span>Tag Only<span style="color:#5800c3;">(private post:only visible to the users who are tagged )<br>
+		<a href="https://wallpall.pythonanywhere.com/votes/107" style="text-decoration:underline;">Example private post</a>
+		</span></span>
+	</form>
+	<span href="" class="mr-2" style="color:teal;">Tag</span>
+	<div id="tagy">
+
+	</div>
+	<br>
+		<input type="text" name="search" style="border:1px solid blue;padding:5px;width:60%;" id="search1" placeholder="add friends here">
+
+<div id="result" class="container">
+    		<div id="lol">
+
+    		</div>
+  	</div>
+
+</div>
+<p id="demo"></p>
+
+	<script type="text/javascript">
+
+		$(function(){
+
+		$("#search1").keyup(function (){
+
+			$.ajax({
+				type: "GET",
+				url:"/userlinks1/",
+				data:{
+					'search':$("#search1").val().trim(),
+				},
+				success: searchdone,
+				dataType:'html'
+
+			});
+
+		});
+
+
+});
+</script>
+{% endblock content %}
+
+

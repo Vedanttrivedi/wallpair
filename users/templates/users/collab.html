@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+	<h1 style="color:yellow;text-align: center;">Collab with {{username}}</h1>
+	<br>
+	<span style="color:white;font-size:18px;text-transform:capitalize;">You will select one image and {{username}} will select one image and one post will be created</span><br>
+	<form enctype="multipart/form-data" method="POST">
+		{% csrf_token %}
+		<input type="text" name="caption" placeholder="enter the caption" style="width: 80%;padding: 10px;" required><br>
+		<span style="color:yellow;font-size: 25px;">Image</span><input type="file" name="image" required style="color:white;"><br><br>
+		<lable style="color:yellow;visibility:hidden;"> Post Type : </lable><br>
+		<span style="color:#5800c3;font-size: 2px;visibility:hidden;" onclick="alert('users can like both images');">Both image Likable</span><input type="radio" name="typee" value="0" checked style="visibility:hidden;">
+		<!--<span style="color:#5800c3;font-size: 25px;">one image Likable </span><input type="radio" name="typee" value="1" onclick="alert('users can only like one image');">--><br><br>
+		<center><input type="submit" name="" value="Send Collab" class="btn btn-outline-warning"></center>
+	</form>
+{% endblock %}

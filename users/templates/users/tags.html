@@ -1,0 +1,36 @@
+{% if users %}
+<ul>
+	{% for user in users%}
+
+			<li>
+				<img src="{{user.profile.image.url}}" width="
+				15" height="15">
+				<a href="/search/?user={{user.username}}">{{user.username}}</a>
+				<button id="btn" onclick="add(this);">add</button>
+			</li>
+
+	<script type="text/javascript">
+		//var button = document.querySelector("#btn");
+		var maindiv = document.querySelector("#tagy");
+		var str = document.querySelector("#doe");
+		console.log(str);
+		//button.addEventListener("click",add);
+		function add(ele)
+		{
+			var div = document.createElement("div");
+			var span  = document.createElement("span");
+			span.innerText=ele.previousElementSibling.innerText;
+			str.value+=ele.previousElementSibling.innerText;
+			str.value+=',';
+
+			div.append(span);
+			//div.append(span1);
+
+			maindiv.appendChild(div);
+		}
+	</script>
+	{% endfor %}
+	</ul>
+	{% else %}
+	<p>no user found!</p>
+{% endif %}

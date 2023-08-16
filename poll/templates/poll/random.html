@@ -1,0 +1,60 @@
+{% extends 'blog/base.html'%}
+<style>
+    @media  (max-width:600px)
+      {
+          .newone{padding:0;margin:0;}
+          .container{padding:0;margin:0;}
+      }
+</style>
+  {% load static %}
+  {% block content %}
+  <style type="text/css">
+    .types
+    {
+      text-decoration: none;
+    }
+  </style>
+      <div style="display: flex;">
+
+        <p class="btn btn-outline-info types ml-2" id="games" class="">Gaming</p>
+        <p class="btn btn-outline-info types ml-2" id="sports" class="types">Sports</p>
+        <p class="btn btn-outline-info types ml-2" id="movies" class="types">Movies</p>
+        <p class="btn btn-outline-info types ml-2" id="movies" class="types">Gadgets</p>
+        <p class="btn btn-outline-info types ml-2" id="movies" class="types">Roast</p>
+        <p class="btn btn-outline-info types ml-2" id="movies" class="types">Gadgets</p>
+        <p class="btn btn-outline-info types ml-2" id="movies" class="types">Code</p>
+        <p class="btn btn-outline-info types ml-2" id="movies" class="types">Location</p>
+            
+      
+      </div>
+      <div id="done">
+        
+      </div>
+ <script type="text/javascript">
+   $(function(){
+
+    $(".types").click(function (){
+      
+      $.ajax({
+        type: "GET",
+        url:"/randomgame/"+$(this).text().toLowerCase(),
+        data:{        
+        },
+        success: searchdone,
+        dataType:'html'
+
+      });
+
+    });
+    
+
+});
+
+function searchdone(data,textStatus,jqXHR)
+{
+
+  $("#done").html(data);
+  console.log(data);
+}
+ </script>
+  {% endblock %}

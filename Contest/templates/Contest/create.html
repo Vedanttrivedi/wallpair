@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+    <center>
+    <h1 style="color:white">Create Contest</h1>
+    
+        <form method="post" action="https://wallpair.com/con/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" placeholder="enter name of the contest" name="name" required style="padding:7px;border:1px solid yellow;width:90%;"><br>
+            <div style="padding:3px;margin-top:10px;">
+                <p style="color:yellow;">First Round Pics</p>
+                <input type="file" name="img1" required><span style="color:white;">VS</span>
+                <input type="file" name="img2" required>
+            </div>
+            <div style="padding:3px;margin-top:10px;">
+                <p style="color:yellow;">Second Round Pics</p>
+                <input type="file" name="img3"><span style="color:white;">VS</span>
+                <input type="file" name="img4" required>
+            </div>
+            <div style="padding:3px;margin-top:10px;margin-bottom:20px;">
+                <p style="color:yellow;">One Finalist</p>
+                <input type="file" name="img5" required>
+            </div>
+            
+            <input type="submit" value="submit">
+        </form>
+    </center>
+{% endblock %}

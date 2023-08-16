@@ -1,0 +1,10 @@
+{% extends 'poll/poll-base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<form method="post">
+		{% csrf_token %}
+		{{q_form|crispy}}
+		{{c_form|crispy}}
+		<input type="submit" name="" value="submit" class="btn btn-outline-info">
+	</form>
+{% endblock content %}
