@@ -1,0 +1,6 @@
+django
+pymysql
+django-crispy-forms
+django-allauth
+six
+google-api-python-client

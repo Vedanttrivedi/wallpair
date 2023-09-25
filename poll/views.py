@@ -250,7 +250,7 @@ def UserCreate(request):
 
 
 def vote(request,pk):
-    if not request.user.is_authenticated or request.user is 'AnonymousUser':
+    if not request.user.is_authenticated or request.user == 'AnonymousUser':
         poll = get_object_or_404(Questions,pk=pk)
         comments  = Comments.objects.filter(question=poll).order_by('-date_posted')
         context = {'data':poll,'comments':comments,'len':len(comments),'ul1d':0,'udl1d':0,'ul2d':0,'udl2d':0}
@@ -1029,7 +1029,7 @@ def repost(request,pk):
         return redirect(f'/votes/{post.id}')
 
     q=  Questions.objects.filter(id=pk).first()
-    if q is not None and q.typee!="reddit" and q.typee!="mpost" and q.typee!="y" and q.poller.profile.clone is  0:
+    if q is not None and q.typee!="reddit" and q.typee!="mpost" and q.typee!="y" and q.poller.profile.clone ==  0:
         return render(request,'poll/repost.html',{'question':q})
     messages.info(request,'not allowd to repost')
     return redirect('/create/')

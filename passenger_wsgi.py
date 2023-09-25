@@ -1,1 +1,0 @@
-from shreeGanesh.wsgi import application
