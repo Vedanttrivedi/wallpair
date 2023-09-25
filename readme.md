@@ -1,6 +1,6 @@
 # WallPair Project
 
-This is the WallPair project, a Django web application.
+This is the WallPair project, a Django web application where user can upload two pictures as poll and other users can react on it via likes and comments.It also uses youtube api for youtube related posts
 
 ## Installation
 
